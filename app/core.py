@@ -112,8 +112,51 @@ def milestone_4(run: str = "top6", base: str = "distilbert/distilgpt2", r: int =
 
 # --- Milestone 5: Merge LoRA adapter and perform inference on new clauses
 # Hint: Follow the merging and inference steps detailed in the 'Build LoRA from Scratch' and 'Fine-Tune GPT-2 to Tag Legal Contract Clauses' drills.
-def milestone_5():  # TODO(milestone 5)
-    raise NotImplementedError("TODO(milestone 5)")
+NEW_CLAUSES = [   # written for this demo, not from LEDGAR
+    "This Agreement shall be governed by and construed in accordance with the laws of India, and the courts at "
+    "New Delhi shall have exclusive jurisdiction.",
+    "If any provision of this Agreement is held invalid or unenforceable, the remaining provisions shall remain "
+    "in full force and effect.",
+    "All notices under this Agreement shall be in writing and delivered by registered post or e-mail to the "
+    "addresses set out above.",
+    "The Supplier shall not assign or transfer this contract or any part of it without the prior written consent "
+    "of the Purchaser.",
+    "The Supplier shall deliver 34,400 radiosondes to the consignee within 120 days of the date of the contract.",
+]
+
+
+def milestone_5(run: str = "top6") -> None:
+    """Merge W' = W + (B@A)*scale into GPT-2, check the scores are unchanged, tag new clauses."""
+    from pathlib import Path
+
+    from app.adapter import load_adapter
+    from app.data import load_split
+    from app.lora import LoRALinear, merge_lora
+    from app.metrics import softmax
+    from app.model import ClauseEncoder, label_logits
+    from app.runs import get_run
+    from app.tagger import decide
+
+    spec = get_run(run)
+    model, tokenizer, label_ids, cfg = load_adapter(Path(spec.adapter))
+    encoder = ClauseEncoder(tokenizer, label_ids, cfg.max_len)
+    prompts = encoder.prompts([r["text"] for r in load_split("val", spec.data_dir)])
+    before = label_logits(model, prompts, label_ids, tokenizer.pad_token_id)
+    merged = merge_lora(model)
+    after = label_logits(model, prompts, label_ids, tokenizer.pad_token_id)
+    left = sum(isinstance(m, LoRALinear) for m in model.modules())
+    print(f"merged {merged} LoRA layers into c_attn (LoRA layers left: {left})")
+    print(f"label scores on {len(prompts)} val clauses, unmerged vs merged: max |difference| = "
+          f"{(after - before).abs().max():.2e}, same predictions: "
+          f"{bool((after.argmax(1) == before.argmax(1)).all())}")
+
+    threshold = cfg.extra.get("threshold", 0.7)
+    tags = decide(softmax(label_logits(model, encoder.prompts(NEW_CLAUSES), label_ids,
+                                       tokenizer.pad_token_id).numpy()), cfg.labels, threshold)
+    print(f"\nnew clauses (review threshold {threshold:.2f}):")
+    for text, t in zip(NEW_CLAUSES, tags):
+        flag = "NEEDS REVIEW" if t["needs_review"] else "ok"
+        print(f"  {text[:85]}...\n    -> {t['label']} ({t['confidence']:.2f}, {flag}; runner-up {t['runner_up']})")
 
 
 # --- Milestone 6: Evaluate tagging accuracy and model efficiency

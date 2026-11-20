@@ -197,9 +197,60 @@ def test_milestone_4_adapter_round_trip(tmp_path):
 
 
 # Milestone 5: Merge LoRA adapter and perform inference on new clauses
-@pytest.mark.skip(reason="remove this line when you start milestone 5")
-def test_milestone_5():
-    raise NotImplementedError("write the test for milestone 5")
+def test_milestone_5_merged_model_gives_same_label_scores():
+    from app.lora import LoRALinear, inject_lora, merge_lora
+    from app.model import label_logits
+    model, label_ids = tiny_gpt2()
+    inject_lora(model, r=2, alpha=4)
+    for n, p in model.named_parameters():
+        if n.endswith(".B"):
+            nn.init.normal_(p, std=0.5)
+    prompts = [[1, 2, 3], [4, 5, 6, 7, 8]]
+    before = label_logits(model, prompts, label_ids, 0)
+    assert merge_lora(model) == 2
+    assert not any(isinstance(m, LoRALinear) for m in model.modules())
+    assert torch.allclose(label_logits(model, prompts, label_ids, 0), before, atol=1e-5)
+
+
+def test_milestone_5_decide_argmax_confidence_and_review_flag():
+    from app.tagger import decide
+    labels = ["Notices", "Waivers", "Severability"]
+    out = decide([[0.1, 0.8, 0.1], [0.4, 0.35, 0.25]], labels, threshold=0.6)
+    assert out[0]["label"] == "Waivers" and out[0]["confidence"] == 0.8 and not out[0]["needs_review"]
+    assert out[0]["runner_up"] in ("Notices", "Severability")
+    assert out[1]["label"] == "Notices" and out[1]["needs_review"]       # 0.40 < 0.60: send to a clerk
+    assert decide([[0.6, 0.4, 0.0]], labels, 0.6)[0]["needs_review"] is False   # threshold is inclusive
+
+
+def test_milestone_5_split_numbered_pdf_style_text():
+    from app.split import page_lines, split_lines
+    pages = ["1\n7\nPerformance security\n7.1\nWithin 21 days the supplier shall furnish performance security\n"
+             "of ten percent of the contract value.\n7.2 The security shall be returned after the warranty period ends.\n",
+             "2\nTender header text\n8. Inspection and tests. The purchaser may inspect the goods at any time.\n"
+             "Warranty .................... 60\n(a) at the supplier's premises; and\n(b) at the final destination.\n"]
+    pages = [p.replace("Tender header text\n", "") for p in pages]
+    clauses = split_lines(page_lines(pages))
+    assert [c["number"] for c in clauses] == ["7.1", "7.2", "8"]
+    assert clauses[0]["text"].startswith("Performance security. Within 21 days")     # heading joins its clause
+    assert "of ten percent" in clauses[0]["text"]                                     # lines are joined
+    assert "(a) at the supplier's premises" in clauses[2]["text"]                     # sub-items stay inside
+    assert all("....." not in c["text"] for c in clauses)                             # table of contents dropped
+
+
+def test_milestone_5_split_plain_text_paragraphs_and_short_fragments():
+    from app.split import split_clauses
+    text = ("This Agreement is governed by the laws of India.\n\nNotices\n\n"
+            "Any notice must be in writing and sent to the address above.\n\nOk, done.")
+    clauses = split_clauses(text)
+    assert [c["text"] for c in clauses] == [
+        "This Agreement is governed by the laws of India.",
+        "Notices. Any notice must be in writing and sent to the address above."]   # "Ok, done." is too short
+
+
+def test_milestone_5_repeated_headers_are_removed():
+    from app.split import page_lines
+    pages = [f"Government of India Tender\nClause text on page {i} is long enough to keep." for i in range(6)]
+    assert "Government of India Tender" not in page_lines(pages)
 
 
 # Milestone 6: Evaluate tagging accuracy and model efficiency
