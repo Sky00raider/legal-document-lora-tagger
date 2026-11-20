@@ -7,6 +7,9 @@ __pycache__/
 .venv/
 .pytest_cache/
 
-# Local data
-data/
+# Local data: downloads and caches stay local; the real documents, hand labels
+# and the trained adapter are committed so a reviewer can run tagging without training.
+data/*
+!data/real_docs/
+data/real_docs/mtd_goods_bpcl_copy.pdf
 *.db
