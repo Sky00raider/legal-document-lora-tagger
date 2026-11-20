@@ -6,7 +6,8 @@ threshold lowers coverage (share auto-tagged) and, if confidence means anything,
 the accuracy of what is auto-tagged.
 
   * The threshold is chosen on LEDGAR *validation*: the lowest one whose auto-tagged
-    clauses reach the target accuracy (default 95%). It is then applied unchanged to
+    clauses reach the target accuracy (default 98%: a clerk tool should be conservative,
+    and with 95% the threshold fell to 0.42 and flagged almost nothing on real records). It is then applied unchanged to
     LEDGAR test and to the real documents, and saved inside the adapter so `tag` uses it.
   * Reliability diagram: among predictions made with confidence about p, is a share of
     about p correct? (ECE = the average gap, weighted by how many predictions per bin.)
@@ -110,7 +111,7 @@ def save_threshold(adapter: Path, threshold: float, target: float) -> None:
     torch.save(saved, adapter)
 
 
-def calibrate(run: str, target: float = 0.95) -> dict:
+def calibrate(run: str, target: float = 0.98) -> dict:
     from app.real import load_hand_labels
 
     spec = get_run(run)
@@ -148,7 +149,7 @@ def calibrate(run: str, target: float = 0.95) -> dict:
     (spec.out / "calibration.json").write_text(json.dumps(result, indent=2), encoding="utf-8")
 
     t = result["ledgar_test"]
-    print(f"threshold {threshold:.3f} (lowest reaching {target:.0%} accuracy on LEDGAR validation), saved in {spec.adapter}")
+    print(f"threshold {threshold:.4f} (lowest reaching {target:.0%} accuracy on LEDGAR validation), saved in {spec.adapter}")
     print(f"LEDGAR test: auto-tags {t['coverage']:.0%} of clauses at {t['accuracy']:.1%} accuracy, "
           f"sends {1 - t['coverage']:.0%} to a clerk (ECE {result['ledgar_test_reliability_ece']:.3f})")
     if "real" in result:

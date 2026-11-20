@@ -51,7 +51,7 @@ def main(argv: list[str] | None = None) -> None:
     _run_arg(p)
     p = sub.add_parser("calibrate", help="accuracy vs coverage, reliability diagram, pick the review threshold")
     _run_arg(p)
-    p.add_argument("--target", type=float, default=0.95, help="accuracy the auto-tagged clauses should reach")
+    p.add_argument("--target", type=float, default=0.98, help="accuracy the auto-tagged clauses should reach")
     args = parser.parse_args(argv)
     if args.command == "hello":
         print("Legal Document LoRA Tagger is ready. Open README.md for your milestones.")

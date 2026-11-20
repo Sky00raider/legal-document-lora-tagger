@@ -1,0 +1,3 @@
+threshold 0.9995 (lowest reaching 98% accuracy on LEDGAR validation), saved in models\adapter.pt
+LEDGAR test: auto-tags 87% of clauses at 99.0% accuracy, sends 13% to a clerk (ECE 0.032)
+Real records: auto-tags 25% of clauses at 90.0% accuracy, sends 75% to a clerk

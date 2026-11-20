@@ -1,0 +1,118 @@
+{
+  "accuracy": 0.9583931133428981,
+  "macro_f1": 0.9583024078274894,
+  "per_class": {
+    "Governing Laws": {
+      "precision": 1.0,
+      "recall": 0.98,
+      "f1": 0.98989898989899
+    },
+    "Notices": {
+      "precision": 0.96,
+      "recall": 0.96,
+      "f1": 0.96
+    },
+    "Amendments": {
+      "precision": 0.9433962264150944,
+      "recall": 1.0,
+      "f1": 0.970873786407767
+    },
+    "Severability": {
+      "precision": 0.9591836734693877,
+      "recall": 0.94,
+      "f1": 0.9494949494949495
+    },
+    "Entire Agreements": {
+      "precision": 0.9607843137254902,
+      "recall": 0.98,
+      "f1": 0.9702970297029702
+    },
+    "Terminations": {
+      "precision": 0.9411764705882353,
+      "recall": 0.96,
+      "f1": 0.9504950495049505
+    },
+    "Assignments": {
+      "precision": 0.96,
+      "recall": 0.96,
+      "f1": 0.96
+    },
+    "Confidentiality": {
+      "precision": 0.98,
+      "recall": 0.98,
+      "f1": 0.98
+    },
+    "Indemnifications": {
+      "precision": 0.9782608695652174,
+      "recall": 0.9,
+      "f1": 0.9375
+    },
+    "Taxes": {
+      "precision": 0.9423076923076923,
+      "recall": 0.98,
+      "f1": 0.9607843137254902
+    },
+    "Payments": {
+      "precision": 0.9565217391304348,
+      "recall": 0.88,
+      "f1": 0.9166666666666666
+    },
+    "Insurances": {
+      "precision": 0.9245283018867925,
+      "recall": 0.98,
+      "f1": 0.9514563106796116
+    },
+    "Arbitration": {
+      "precision": 0.9791666666666666,
+      "recall": 1.0,
+      "f1": 0.9894736842105264
+    },
+    "Warranties": {
+      "precision": 0.9387755102040817,
+      "recall": 0.92,
+      "f1": 0.9292929292929293
+    }
+  },
+  "confusions": [
+    [
+      "Taxes",
+      "Payments",
+      1,
+      3
+    ],
+    [
+      "Assignments",
+      "Indemnifications",
+      1,
+      1
+    ],
+    [
+      "Amendments",
+      "Severability",
+      0,
+      2
+    ],
+    [
+      "Notices",
+      "Terminations",
+      1,
+      1
+    ],
+    [
+      "Confidentiality",
+      "Warranties",
+      1,
+      1
+    ]
+  ],
+  "efficiency": {
+    "total_params": 82070784,
+    "trainable_params": 158208,
+    "lora_params": 147456,
+    "adapter_kb": 623.05859375,
+    "full_model_mb": 313.0341796875,
+    "train_seconds": 5015.5,
+    "train_examples": 1400,
+    "epochs": 6
+  }
+}

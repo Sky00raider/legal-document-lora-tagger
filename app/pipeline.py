@@ -29,7 +29,7 @@ def tag_document(file: str, adapter: str = "models/adapter.pt", threshold: float
     paths = write_reports(doc, stem)
     s = doc["summary"]
     print(f"{path.name}: {s['clauses']} clauses, {s['auto_tagged']} auto-tagged, {s['needs_review']} NEEDS REVIEW "
-          f"(threshold {tagger.threshold:.2f}) in {time.time() - start:.0f}s")
+          f"(threshold {tagger.threshold:.4f}) in {time.time() - start:.0f}s")
     for name, n in s["auto_tagged_by_label"].items():
         if n:
             print(f"  {name:<20} {n}")
@@ -45,8 +45,8 @@ def real_eval(run: str = "procurement") -> dict:
     m = evaluate_real(spec.adapter)
     spec.out.mkdir(parents=True, exist_ok=True)
     (spec.out / "real_eval.json").write_text(json.dumps(m, indent=2), encoding="utf-8")
-    print(f"{m['clauses']} hand-labelled clauses: {m['in_set']} in the label set, {m['other']} Other "
-          f"(threshold {m['threshold']:.2f})")
+    print(f"{m['clauses']} labelled real clauses: {m['in_set']} in the label set, {m['other']} Other "
+          f"(threshold {m['threshold']:.4f})")
     print(f"  in-set accuracy (argmax)            {m['in_set_accuracy']:.1%}")
     print(f"  in-set accuracy when auto-tagged     {m['in_set_auto_accuracy']:.1%}")
     print(f"  Other clauses flagged NEEDS REVIEW   {m['other_flagged']:.1%}")

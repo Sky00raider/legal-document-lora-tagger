@@ -1,0 +1,59 @@
+5.1 Use of contract documents and information. The supplier shall not, without the purchaser's prior written consent, disclose the contract or any provision thereof or any specification, plan, drawing, pattern, sample or information furnished by or on behalf of the purchaser in connection herewith, to any person other than a person employed by the supplier in the performance of the contract. Also, disclosure to any such employed person shall be made in confidence and shall extend only so far as may be necessary for the purposes such performance.
+
+5.2 The supplier shall not, without the purchaser's prior written consent, make use of any document or information enumerated in GCC sub- clause 5.1 except for the purposes of performing the contract.
+
+5.3 Every document other than the contract itself, mentioned in GCC sub- clause 5.1, shall remain the property of the purchaser and shall be returned (in all copies) to the purchaser on completion of the supplier's performance under the contract, if so required by the purchaser.
+
+7.1 Performance security. Within 21(twenty one) days after the issue of notification of award by the purchaser, the supplier, shall furnish performance security to the purchaser for an amount of 10%(ten percent) of the contract value, valid up to 60(sixty) days after the date of completion of all contractual obligations by the supplier, including the warranty obligations.
+
+7.2 In the event of any correction of defects or a replacement of defective material during the warranty period, the warranty for the corrected/replaced material shall be extended to a further period of twelve months from the date of the correction/ replacement and the Performance Security for the proportionate value (which will be determined by the purchaser in consultation with the supplier) shall be extended by 60(sixty) days over and above the extended warranty period.
+
+7.3 In the event of any contract amendment, the supplier shall, within 21(twenty one) days of issue of such amendment, furnish the necessary amendment to the Performance Security, rendering the same valid in all respects in terms of the contract, as amended.
+
+7.4 The proceeds of the Performance Security shall be payable to the purchaser as compensation for any loss resulting from the supplier's failure to complete its obligations under the contract.
+
+7.5 The Performance Security shall be denominated in Indian Rupees or in the currency of the contract and shall be in one of the following forms: a. Cash in Indian currency. b. Demand Draft on any scheduled commercial bank in India, to be drawn in favour of the purchaser as indicated in the Schedule of Requirements. c. Bank Guarantee issues by a scheduled commercial bank in India, in the prescribed form as provided in section VII/4 of this bidding documents.
+
+7.6 Subject to GCC sub- clause 7.4 above, the performance security will be discharged by the purchaser and returned to the supplier on completion of the supplier's contractual obligations including the warranty obligations under the contract.
+
+9.1 Packing. The supplier shall provide such packing of the goods as is required to prevent their damage or deterioration during their transit to their final destination as indicated in the contract. The packing shall be sufficient to withstand, without limitation, rough handling and exposure to extreme temperatures, humid weather and precipitation during transit and open shortage. The sizes and weights of the packing cases shall also take into consideration, where applicable, the available inland mode(s) of transport in India, the remoteness of the goods' final destination and the absence of heavy handling facilities at all points in transit. Further, limitations and /or mandatory instructions, if any in the weight, volumes and sizes of the packages shall also be taken care of by the supplier.
+
+9.2 The packing marking and documentation within and outside the packages shall comply strictly with such special requirements if any as shall be expressly provided for in the contract, including additional requirements, if any, specified in the Schedule of Requirements and any subsequent instructions given by the purchaser.
+
+9.3 Packing instruction: The supplier will be required to make separate packages for each consignee named in the contract. Each package will be marked by the supplier at its own expense, on three sides with indelible ink/paint, with the following details: a) contract No, and date b) name and address of the consignee c) name and address of the supplier d) brief description of goods e) gross weight and outer dimension of the package f) country of origin of goods g) packing list reference No.and h) and any other requirement, relevant to the contract.
+
+16.1 Warranty. The supplier warrants that the goods supplied under the contract is new, unused, of the most recent of current models and incorporate all recent improvements in design and materials unless provided otherwise in the contract. The supplier further warrants that the goods supplied under the contract shall have no defect arising from design, materials (except when the design adopted and/or the material used are as per the purchaser's specifications) or workmanship or from any act or omission of the supplier, the may develop under normal use of the supplied goods under the conditions prevailing in India.
+
+16.2 This warranty shall remain valid for 12 (twelve) months after the goods or any portion thereof as the case may be, have been delivered to the final destination and installed and commissioned at the final destination and accepted by the purchaser, in terms of the contract or for 18 (eighteen) months from the date of despatch from the supplier's works for domestic goods or for
+
+21 (twenty-one) months after the date of shipment from the port or place of loading in the source country for imported goods, whichever is earlier, unless specified otherwise in the Schedule of Requirements.
+
+16.3 The purchaser shall promptly notify the supplier in writing of any claim arising under this warranty.
+
+16.4 Upon receipt of such notice, the supplier shall, with all reasonable speed (or within the period, if specified in the Schedule of Requirements and the contract), repair or replace the defective goods of parts thereof, free of cost, at the ultimate destination. The supplier shall take over the replaced parts/goods at the time of their replacement. No claim whatsoever shall lie on the purchaser for the replaced parts/goods thereafter.
+
+16.5 In the event of any correction of a defect or replacement of any defective material during the warranty period, the warranty for the corrected/replaced material shall be extended to a further period of 12 (twelve) months from the date, such corrected/replaced material starts functioning to the satisfaction of the purchaser.
+
+16.6 If the supplier, having been notified, fails to remedy the defect(s) within a reasonable period (or within the period, if specified in the Schedule of Requirements and the contract), the purchaser may proceed to take such remedial action as may be necessary, at the supplier's risk and expense and without prejudice to any other rights, which the purchaser may have against the supplier, under contract.
+
+20.1 Assignment. The supplier shall bot assign, in whole or in part, its obligations to perform under the contract, except with the purchaser's prior written consent.
+
+21.1 Sub Contracts. The supplier shall notify the purchaser in writing of all sub contracts awarded under the contract, if not already specified in its bid. Such notifications, in its original bid or later, shall not relieve the supplier from any liability or obligation, whatsoever, under the contract.
+
+21.2 Subcontract shall be only for bought-out items and sub-assemblies.
+
+21.3 Subcontracts must comply with the provisions of GCC clause 3.
+
+22.1 Delay in the supplier's performance. Delivery of the goods and performance of the services shall be made by the supplier in accordance with the time schedule specified by the purchaser in the "Schedule of Requirements".
+
+22.2 Except as provided under GCC clause 25,any unexcused delay by the supplier in maintaining its contractual delivery obligations shall render the supplier liable to any or all of the following sanctions:
+
+16 imposition of liquidated damages, forfeiture of its performance security and/or termination of the contract for default
+
+22.3 If at any time during the performance of the contract, the supplier or its subcontractor(s) should encounter conditions hindering timely delivery of the goods and performance of the services, the supplier shall promptly notify the purchaser in writing of the fact of the delay, its likely duration and its causes(s) . After the receipt of the supplier's notice, the purchaser, as soon as practicable, shall evaluate the situation and may at its discretion extend the supplier's time for performance, in which case the extension of the delivery period shall be ratified by issuing an amendment to the contract.
+
+22.4 The supplier shall not despatch the goods after expiry of the delivery period . The supplier is required to apply to the purchaser for extension of delivery period and obtain the same before despatch. In case the supplier despatches the goods without obtaining an extension, it would be doing so at its own risk and no claim for payment for such supply and/or any other expense related to such supply shall lie against the purchaser.
+
+23.1 Liquidated damages. Subject to GCC clause 25, if the supplier fails to deliver any or all the goods or perform the services within the time period(s) specified in the contract, the purchaser shall, without prejudice to its other remedies under the contract, deduct from the contract price, as liquidated damages, a sum equivalent to 0.5%( half percent) of the delivered price of the delayed goods or unperformed services for each week of delay or part thereof until actual delivery or performance, up to a maximum deduction of 10%(ten percent) of the delayed goods' or services' contract price. Once the maximum is reached, the purchaser may consider termination of the contract, if the same have not been terminated already. Further, during the above mentioned delayed period of supply and/ or performance, the supplier, notwithstanding any stipulation in the contract for increase in price for any ground, shall not be entitled to any increase in price and cost, whatsoever, which take place during the period of delay. But, nevertheless, the purchaser shall be entitled to the benefit any decrease in price and cost on any ground during that period of delay.
+
+24.1 The purchaser, without prejudice to any other remedy for breach of contract, may, by written notice of default sent to the supplier, terminate the contract in whole or in part, if the supplier fails to deliver any or all of the goods or fails to perform any other contractual obligation(s) within the time period specified in the contract, or within any extension thereof granted by the purchaser pursuant to GCC clause 22.

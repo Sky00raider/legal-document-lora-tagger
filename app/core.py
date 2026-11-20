@@ -103,7 +103,7 @@ def milestone_4(run: str = "top6", base: str = "distilbert/distilgpt2", r: int =
     reloaded = accuracy(model, ClauseEncoder(tokenizer, label_ids, cfg.max_len), val, cfg.labels,
                         tokenizer.pad_token_id)
     print(f"reloaded onto a fresh {base}: val accuracy {reloaded:.4f} (trained model: {report['val_accuracy']:.4f})"
-          f" -> {'match' if abs(reloaded - report['val_accuracy']) < 1e-6 else 'MISMATCH'}")
+          f" -> {'match' if round(reloaded, 4) == report['val_accuracy'] else 'MISMATCH'}")
     report.update(adapter_bytes=size, reloaded_val_accuracy=round(reloaded, 4))
     spec.out.mkdir(parents=True, exist_ok=True)
     (spec.out / "train_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")

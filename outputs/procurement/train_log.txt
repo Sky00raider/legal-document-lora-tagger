@@ -1,0 +1,47 @@
+parameters: 82,070,784 total | LoRA A/B 147,456 (0.18%) | trainable incl. 14 label rows 158,208 (0.19%)
+{'loss': '6.527', 'grad_norm': '89.33', 'learning_rate': '0.0009771', 'epoch': '0.1429'}
+{'loss': '1.411', 'grad_norm': '50.7', 'learning_rate': '0.0009533', 'epoch': '0.2857'}
+{'loss': '0.7593', 'grad_norm': '35.43', 'learning_rate': '0.0009295', 'epoch': '0.4286'}
+{'loss': '0.6586', 'grad_norm': '44.36', 'learning_rate': '0.0009057', 'epoch': '0.5714'}
+{'loss': '0.3022', 'grad_norm': '36.53', 'learning_rate': '0.0008819', 'epoch': '0.7143'}
+{'loss': '0.8189', 'grad_norm': '35.46', 'learning_rate': '0.0008581', 'epoch': '0.8571'}
+{'loss': '0.4371', 'grad_norm': '28.53', 'learning_rate': '0.0008343', 'epoch': '1'}
+{'loss': '0.4551', 'grad_norm': '33.14', 'learning_rate': '0.0008105', 'epoch': '1.143'}
+{'loss': '0.248', 'grad_norm': '34.34', 'learning_rate': '0.0007867', 'epoch': '1.286'}
+{'loss': '0.3357', 'grad_norm': '0.2939', 'learning_rate': '0.0007629', 'epoch': '1.429'}
+{'loss': '0.4405', 'grad_norm': '31.47', 'learning_rate': '0.000739', 'epoch': '1.571'}
+{'loss': '0.3597', 'grad_norm': '45.77', 'learning_rate': '0.0007152', 'epoch': '1.714'}
+{'loss': '0.2549', 'grad_norm': '24.43', 'learning_rate': '0.0006914', 'epoch': '1.857'}
+{'loss': '0.196', 'grad_norm': '3.505', 'learning_rate': '0.0006676', 'epoch': '2'}
+{'loss': '0.2453', 'grad_norm': '9.059', 'learning_rate': '0.0006438', 'epoch': '2.143'}
+{'loss': '0.2739', 'grad_norm': '0.1818', 'learning_rate': '0.00062', 'epoch': '2.286'}
+{'loss': '0.1961', 'grad_norm': '20.79', 'learning_rate': '0.0005962', 'epoch': '2.429'}
+{'loss': '0.2039', 'grad_norm': '31.1', 'learning_rate': '0.0005724', 'epoch': '2.571'}
+{'loss': '0.2708', 'grad_norm': '0.1467', 'learning_rate': '0.0005486', 'epoch': '2.714'}
+{'loss': '0.17', 'grad_norm': '2.604', 'learning_rate': '0.0005248', 'epoch': '2.857'}
+{'loss': '0.2115', 'grad_norm': '0.002583', 'learning_rate': '0.000501', 'epoch': '3'}
+{'loss': '0.1262', 'grad_norm': '28.14', 'learning_rate': '0.0004771', 'epoch': '3.143'}
+{'loss': '0.123', 'grad_norm': '0.01787', 'learning_rate': '0.0004533', 'epoch': '3.286'}
+{'loss': '0.08457', 'grad_norm': '19.6', 'learning_rate': '0.0004295', 'epoch': '3.429'}
+{'loss': '0.152', 'grad_norm': '12.28', 'learning_rate': '0.0004057', 'epoch': '3.571'}
+{'loss': '0.1177', 'grad_norm': '18.67', 'learning_rate': '0.0003819', 'epoch': '3.714'}
+{'loss': '0.1391', 'grad_norm': '0.7132', 'learning_rate': '0.0003581', 'epoch': '3.857'}
+{'loss': '0.1033', 'grad_norm': '4.91', 'learning_rate': '0.0003343', 'epoch': '4'}
+{'loss': '0.07634', 'grad_norm': '0.1801', 'learning_rate': '0.0003105', 'epoch': '4.143'}
+{'loss': '0.01223', 'grad_norm': '0.007914', 'learning_rate': '0.0002867', 'epoch': '4.286'}
+{'loss': '0.04055', 'grad_norm': '0.000255', 'learning_rate': '0.0002629', 'epoch': '4.429'}
+{'loss': '0.1637', 'grad_norm': '0.06851', 'learning_rate': '0.000239', 'epoch': '4.571'}
+{'loss': '0.04208', 'grad_norm': '0.07004', 'learning_rate': '0.0002152', 'epoch': '4.714'}
+{'loss': '0.1057', 'grad_norm': '0.8589', 'learning_rate': '0.0001914', 'epoch': '4.857'}
+{'loss': '0.1174', 'grad_norm': '0.07506', 'learning_rate': '0.0001676', 'epoch': '5'}
+{'loss': '0.02342', 'grad_norm': '0.009052', 'learning_rate': '0.0001438', 'epoch': '5.143'}
+{'loss': '0.01451', 'grad_norm': '0.1498', 'learning_rate': '0.00012', 'epoch': '5.286'}
+{'loss': '0.0638', 'grad_norm': '0.04965', 'learning_rate': '9.619e-05', 'epoch': '5.429'}
+{'loss': '0.02569', 'grad_norm': '1.559', 'learning_rate': '7.238e-05', 'epoch': '5.571'}
+{'loss': '0.04799', 'grad_norm': '0.01661', 'learning_rate': '4.857e-05', 'epoch': '5.714'}
+{'loss': '0.07932', 'grad_norm': '3.221', 'learning_rate': '2.476e-05', 'epoch': '5.857'}
+{'loss': '0.06118', 'grad_norm': '33.98', 'learning_rate': '9.524e-07', 'epoch': '6'}
+{'train_runtime': '5015', 'train_samples_per_second': '1.675', 'train_steps_per_second': '0.209', 'train_loss': '0.3927', 'epoch': '6'}
+trained in 83.6 min, final train loss 0.3927, val accuracy 0.956
+adapter saved: models\adapter.pt (623 KB)
+reloaded onto a fresh distilbert/distilgpt2: val accuracy 0.9557 (trained model: 0.9557) -> MISMATCH

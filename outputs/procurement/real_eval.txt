@@ -1,0 +1,7 @@
+40 hand-labelled clauses: 15 in the label set, 25 Other (threshold 1.00)
+  in-set accuracy (argmax)            73.3%
+  in-set accuracy when auto-tagged     100.0%
+  Other clauses flagged NEEDS REVIEW   96.0%
+  clerk view: auto-tags 25% at 90.0% accuracy
+  confident mistakes:
+    truth Other             said Entire Agreements (1.00)  The Contract. Language of Contract Unless otherwise stipulated in SCC,

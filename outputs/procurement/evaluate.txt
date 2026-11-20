@@ -1,0 +1,18 @@
+test accuracy 0.958, macro-F1 0.958  (697 clauses)
+clause type             prec   rec    f1
+Governing Laws          1.00  0.98  0.99
+Notices                 0.96  0.96  0.96
+Amendments              0.94  1.00  0.97
+Severability            0.96  0.94  0.95
+Entire Agreements       0.96  0.98  0.97
+Terminations            0.94  0.96  0.95
+Assignments             0.96  0.96  0.96
+Confidentiality         0.98  0.98  0.98
+Indemnifications        0.98  0.90  0.94
+Taxes                   0.94  0.98  0.96
+Payments                0.96  0.88  0.92
+Insurances              0.92  0.98  0.95
+Arbitration             0.98  1.00  0.99
+Warranties              0.94  0.92  0.93
+confusions: Taxes<->Payments 1+3, Assignments<->Indemnifications 1+1, Amendments<->Severability 0+2, Notices<->Terminations 1+1, Confidentiality<->Warranties 1+1
+trainable 158,208 of 82,070,784 (0.19%), adapter 623 KB vs full model 313 MB, trained in 83.6 min
