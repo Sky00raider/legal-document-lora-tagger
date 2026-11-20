@@ -1,0 +1,10 @@
+vocab 50,257 -> 50,263 (+6 label tokens), pad token = '<|endoftext|>'
+embedding matrix: (50263, 768), output layer tied to it: True
+'<governing_laws>' before: ['<', 'go', 'verning', '_', 'laws', '>']  after: ['<governing_laws>']
+  <governing_laws>         id 50257
+  <notices>                id 50258
+  <counterparts>           id 50259
+  <entire_agreements>      id 50260
+  <severability>           id 50261
+  <amendments>             id 50262
+a training example is 62 tokens; its last 4 tokens: [' omitted', '.', ' ', '<severability>']

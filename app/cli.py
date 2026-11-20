@@ -10,12 +10,16 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("--top-k", type=int, default=6, help="number of clause types (most common first)")
     p.add_argument("--per-class", type=int, default=100, help="training examples per clause type")
     p.add_argument("--eval-per-class", type=int, default=50, help="validation and test examples per type")
+    sub.add_parser("tokens", help="milestone 2: add the label tokens and show what changed")
     args = parser.parse_args(argv)
     if args.command == "hello":
         print("Legal Document LoRA Tagger is ready. Open README.md for your milestones.")
     elif args.command == "prepare":
         from app.core import milestone_1
         milestone_1(args.top_k, args.per_class, args.eval_per_class)
+    elif args.command == "tokens":
+        from app.core import milestone_2
+        milestone_2()
 
 
 if __name__ == "__main__":

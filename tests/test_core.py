@@ -49,10 +49,49 @@ def test_milestone_1_build_dataset_on_fake_splits():
     assert len(ds["test"]) == 5
 
 
+# Shared tiny model: a 2-layer GPT-2 built from a config, random weights, no download.
+def tiny_gpt2(vocab: int = 50, n_labels: int = 3):
+    from transformers import GPT2Config, GPT2LMHeadModel
+    torch.manual_seed(0)
+    model = GPT2LMHeadModel(GPT2Config(vocab_size=vocab, n_positions=32, n_embd=16, n_layer=2, n_head=2))
+    model.resize_token_embeddings(vocab + n_labels)
+    return model.eval(), list(range(vocab, vocab + n_labels))
+
+
 # Milestone 2: Extend GPT-2 tokenizer and model for custom tags
-@pytest.mark.skip(reason="remove this line when you start milestone 2")
-def test_milestone_2():
-    raise NotImplementedError("write the test for milestone 2")
+def test_milestone_2_only_label_rows_get_gradient():
+    from app.model import train_only_label_rows
+    model, label_ids = tiny_gpt2()
+    for p in model.parameters():
+        p.requires_grad_(False)
+    train_only_label_rows(model, label_ids)
+    model(torch.tensor([[1, 2, 3, label_ids[0]]]), labels=torch.tensor([[1, 2, 3, label_ids[0]]])).loss.backward()
+    grad = model.get_input_embeddings().weight.grad
+    assert grad[label_ids].abs().sum() > 0
+    assert grad[:label_ids[0]].abs().sum() == 0          # the original vocabulary never moves
+
+
+def test_milestone_2_label_logits_match_full_forward():
+    from app.model import label_logits
+    model, label_ids = tiny_gpt2()
+    prompts = [[1, 2, 3], [4, 5]]
+    scores = label_logits(model, prompts, label_ids, pad_id=0)
+    for i, p in enumerate(prompts):
+        full = model(torch.tensor([p])).logits[0, -1]
+        assert torch.allclose(scores[i], full[label_ids], atol=1e-5)
+
+
+@pytest.mark.slow
+def test_milestone_2_real_tokenizer_label_token_is_atomic():
+    from transformers import AutoModelForCausalLM, AutoTokenizer
+    from app.model import ClauseEncoder, add_label_tokens
+    tok = AutoTokenizer.from_pretrained("distilbert/distilgpt2")
+    model = AutoModelForCausalLM.from_pretrained("distilbert/distilgpt2")
+    ids = add_label_tokens(model, tok, ["Governing Laws", "Notices"])
+    assert tok.tokenize("<governing_laws>") == ["<governing_laws>"] and tok.pad_token == tok.eos_token
+    text = "This Agreement is governed by Delaware law."
+    expected = tok(data.format_example(text, "Notices"), add_special_tokens=False).input_ids
+    assert ClauseEncoder(tok, ids).training_examples([text], [1])[0] == expected
 
 
 # Milestone 3: Implement LoRA adapter and inject into GPT-2

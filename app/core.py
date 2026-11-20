@@ -19,8 +19,26 @@ def milestone_1(top_k: int = 6, per_class: int = 100, eval_per_class: int = 50, 
 
 # --- Milestone 2: Extend GPT-2 tokenizer and model for custom tags
 # Hint: Apply the special token extension methods from the 'Fine-Tune GPT-2 to Tag Legal Contract Clauses' drill.
-def milestone_2():  # TODO(milestone 2)
-    raise NotImplementedError("TODO(milestone 2)")
+def milestone_2(base: str = "distilbert/distilgpt2") -> None:
+    """Add one atomic token per clause type and show what changed."""
+    from transformers import AutoTokenizer
+
+    from app.data import label_token, load_labels, load_split
+    from app.model import ClauseEncoder, load_base
+
+    labels = load_labels()
+    before = AutoTokenizer.from_pretrained(base)
+    model, tokenizer, label_ids = load_base(base, labels)
+    token = label_token(labels[0])
+    print(f"vocab {len(before):,} -> {len(tokenizer):,} (+{len(labels)} label tokens), pad token = {tokenizer.pad_token!r}")
+    print(f"embedding matrix: {tuple(model.get_input_embeddings().weight.shape)}, "
+          f"output layer tied to it: {model.get_output_embeddings().weight is model.get_input_embeddings().weight}")
+    print(f"{token!r} before: {before.tokenize(token)}  after: {tokenizer.tokenize(token)}")
+    for name, i in zip(labels, label_ids):
+        print(f"  {label_token(name):<24} id {i}")
+    row = load_split("train")[0]
+    ids = ClauseEncoder(tokenizer, label_ids).training_examples([row["text"]], [labels.index(row["label"])])[0]
+    print(f"a training example is {len(ids)} tokens; its last 4 tokens: {[tokenizer.decode([i]) for i in ids[-4:]]}")
 
 
 # --- Milestone 3: Implement LoRA adapter and inject into GPT-2
