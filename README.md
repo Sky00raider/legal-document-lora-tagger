@@ -16,8 +16,9 @@ laptop CPU.
 > Getting there took a stricter threshold than LEDGAR alone suggests: the model is confidently wrong
 > on unfamiliar text. See [what happened on real records](#what-happened-on-real-indian-records).
 
-<!-- Demo GIF: record `python -m app.cli tag data/real_docs/ivri_gcc.pdf`, open the .html report, save as docs/demo.gif and replace this line with ![demo](docs/demo.gif) -->
-_Demo GIF: coming soon._
+![The clerk report for a real contract excerpt: summary counts, clause types, and the clauses sent for review](docs/report.png)
+
+_The HTML report for [samples/ivri_gcc_excerpt.txt](samples/ivri_gcc_excerpt.txt): 30 real clauses, 7 auto-tagged, 23 sent to a clerk with the model's best guess and confidence._
 
 ## Quickstart (no training needed, under a minute)
 
@@ -224,6 +225,21 @@ samples/  sample input and tagged outputs
 
 ## My write-up
 
-<!-- In your own words: why you built it this way, what surprised you, what you would do next. -->
+**Why this design.** A clerk does not need a model that is right 96% of the time on a benchmark;
+they need one that does the easy part and hands them the rest. So every design choice points at
+that: one label token per clause type, so the answer is a single forward pass with a real
+probability attached; a review threshold instead of a forced answer; and a report a clerk can open
+without installing anything. LoRA made it possible to train on my laptop CPU and ship the result
+as a 623 KB file instead of a 313 MB model.
 
-_To be written._
+**What surprised me.** The model I trained first, on LEDGAR's six most common clause types, scored
+97% on held-out clauses and I thought I was done. On real Indian tenders it auto-tagged 85% of
+clauses and was right 8.8% of the time, at confidence 1.00. Two fixes helped: picking clause types
+by reading the actual documents (Counterparts never appears in an Indian tender, while payment,
+tax and arbitration clauses are everywhere), and a much stricter review threshold. Benchmark
+accuracy told me almost nothing about how it would behave on the documents it was meant for.
+
+**What I would do next.** Label a few hundred real clauses and fit the threshold on those instead
+of on LEDGAR; add the Indian clause types LEDGAR does not have (performance security, liquidated
+damages, force majeure) with an explicit "Other" class; and replace the regex clause splitter, which
+causes some of the errors on its own.

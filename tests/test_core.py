@@ -281,7 +281,7 @@ def test_milestone_6_report_html_md_json(tmp_path):
     paths = write_reports(doc, tmp_path / "demo.tagged")
     assert [p.suffix for p in paths] == [".json", ".md", ".html"]
     page = paths[2].read_text(encoding="utf-8")
-    assert "NEEDS REVIEW" in page and "93%" in page and "&lt;b&gt;10%&lt;/b&gt;" in page   # escaped, not injected
+    assert "NEEDS REVIEW" in page and "93.0%" in page and "&lt;b&gt;10%&lt;/b&gt;" in page   # escaped, not injected
     assert "<script" not in page and "http" not in page.split("</style>")[0]                # self-contained
     assert "**NEEDS REVIEW** (best guess: Waivers)" in paths[1].read_text(encoding="utf-8")
     assert json.loads(paths[0].read_text(encoding="utf-8"))["clauses"][1]["needs_review"] is True

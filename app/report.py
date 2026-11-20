@@ -33,7 +33,7 @@ def to_markdown(doc: dict) -> str:
     s = doc["summary"]
     lines = [f"# Tagged document: {doc['source']}", "",
              f"{s['clauses']} clauses: **{s['auto_tagged']} auto-tagged**, "
-             f"**{s['needs_review']} NEEDS REVIEW** (confidence below {doc['threshold']:.2f}).", "",
+             f"**{s['needs_review']} NEEDS REVIEW** (confidence below {doc['threshold']:.2%}).", "",
              "| Clause type | Auto-tagged |", "|---|---:|"]
     lines += [f"| {name} | {n} |" for name, n in s["auto_tagged_by_label"].items()]
     lines += ["", "| # | Clause | Tag | Confidence |", "|---|---|---|---:|"]
@@ -41,7 +41,7 @@ def to_markdown(doc: dict) -> str:
         text = c["text"].replace("|", "\\|")
         text = text if len(text) <= 160 else text[:157] + "..."
         tag = f"**NEEDS REVIEW** (best guess: {c['label']})" if c["needs_review"] else c["label"]
-        lines.append(f"| {c['number'] or c['id']} | {text} | {tag} | {c['confidence']:.2f} |")
+        lines.append(f"| {c['number'] or c['id']} | {text} | {tag} | {c['confidence']:.1%} |")
     return "\n".join(lines) + "\n"
 
 
@@ -66,13 +66,13 @@ a{color:inherit}
 
 def _clause_html(c: dict, colors: dict) -> str:
     color = colors.get(c["label"], "#64748b")
-    pct = round(100 * c["confidence"])
+    pct = 100 * c["confidence"]
     flag = (f'<span class="flag">NEEDS REVIEW</span><span class="muted">best guess</span>' if c["needs_review"] else "")
     return (f'<div class="clause{" review" if c["needs_review"] else ""}" id="c{c["id"]}" style="--c:{color}">'
             f'<div class="head"><span class="num">{html.escape(str(c["number"] or c["id"]))}</span>{flag}'
             f'<span class="chip" style="background:{color}">{html.escape(c["label"])}</span>'
-            f'<span class="bar" title="confidence {pct}%"><i style="width:{pct}%"></i></span>'
-            f'<span class="conf">{pct}%</span></div>'
+            f'<span class="bar" title="confidence {pct:.1f}%"><i style="width:{pct:.1f}%"></i></span>'
+            f'<span class="conf">{pct:.1f}%</span></div>'
             f'<div class="text">{html.escape(c["text"])}</div></div>')
 
 
@@ -85,7 +85,7 @@ def to_html(doc: dict) -> str:
     review = [c for c in doc["clauses"] if c["needs_review"]]
     review_list = ("".join(f'<tr><td><a href="#c{c["id"]}">{html.escape(str(c["number"] or c["id"]))}</a></td>'
                            f'<td>{html.escape(c["text"][:110])}{"..." if len(c["text"]) > 110 else ""}</td>'
-                           f'<td>{html.escape(c["label"])}?</td><td>{round(100 * c["confidence"])}%</td></tr>'
+                           f'<td>{html.escape(c["label"])}?</td><td>{100 * c["confidence"]:.1f}%</td></tr>'
                            for c in review) or '<tr><td colspan="4">Nothing to review.</td></tr>')
     body = "".join(_clause_html(c, colors) for c in doc["clauses"])
     return f"""<!doctype html>
@@ -94,7 +94,7 @@ def to_html(doc: dict) -> str:
 <body><main>
 <h1>Tagged document: {html.escape(doc['source'])}</h1>
 <div class="muted">Tagged {html.escape(doc['date'])} by a LoRA fine-tuned distilgpt2. Clauses with confidence below
-{doc['threshold']:.0%} are marked NEEDS REVIEW: the tag is only a guess and a clerk should decide.</div>
+{doc['threshold']:.2%} are marked NEEDS REVIEW: the tag is only a guess and a clerk should decide.</div>
 <div class="stats">
 <div class="stat"><b>{s['clauses']}</b>clauses found</div>
 <div class="stat"><b>{s['auto_tagged']}</b>auto-tagged ({share:.0f}%)</div>
