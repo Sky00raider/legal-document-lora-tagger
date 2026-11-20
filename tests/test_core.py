@@ -142,9 +142,58 @@ def test_milestone_3_conv1d_weight_is_transposed_on_merge():
 
 
 # Milestone 4: Fine-tune GPT-2 with LoRA on the clause dataset
-@pytest.mark.skip(reason="remove this line when you start milestone 4")
-def test_milestone_4():
-    raise NotImplementedError("write the test for milestone 4")
+def test_milestone_4_loss_is_masked_to_the_label_position():
+    from app.train import LabelPositionCollator
+    batch = LabelPositionCollator(pad_id=0)([{"input_ids": [5, 6, 7, 99]}, {"input_ids": [8, 98]}])
+    assert batch["input_ids"].tolist() == [[5, 6, 7, 99], [8, 98, 0, 0]]
+    assert batch["attention_mask"].tolist() == [[1, 1, 1, 1], [1, 1, 0, 0]]
+    assert batch["labels"].tolist() == [[-100, -100, -100, 99], [-100, 98, -100, -100]]
+
+
+def test_milestone_4_training_step_moves_only_adapter_and_label_rows():
+    from app.lora import inject_lora
+    from app.model import train_only_label_rows
+    from app.train import LabelPositionCollator
+    model, label_ids = tiny_gpt2()
+    inject_lora(model, r=2, alpha=4)
+    train_only_label_rows(model, label_ids)
+    before = {n: p.detach().clone() for n, p in model.named_parameters()}
+    model.train()
+    opt = torch.optim.AdamW([p for p in model.parameters() if p.requires_grad], lr=1e-2, weight_decay=0.0)
+    for _ in range(3):
+        batch = LabelPositionCollator(0)([{"input_ids": [1, 2, 3, label_ids[1]]}, {"input_ids": [4, label_ids[0]]}])
+        model(**batch).loss.backward()
+        opt.step()
+        opt.zero_grad()
+    for n, p in model.named_parameters():
+        changed = not torch.equal(p, before[n])
+        if n.endswith(".B"):
+            assert changed, n
+        elif n == "transformer.wte.weight":
+            assert torch.equal(p[:label_ids[0]], before[n][:label_ids[0]])
+            assert not torch.equal(p[label_ids], before[n][label_ids])
+        elif not n.endswith(".A"):
+            assert not changed, n
+
+
+def test_milestone_4_adapter_round_trip(tmp_path):
+    from app.adapter import TaggerConfig, load_into, save_adapter
+    from app.lora import inject_lora
+    from app.model import label_logits
+    model, label_ids = tiny_gpt2()
+    inject_lora(model, r=2, alpha=4)
+    for n, p in model.named_parameters():
+        if n.endswith(".B"):
+            nn.init.normal_(p)
+    with torch.no_grad():
+        model.get_input_embeddings().weight[label_ids] += 1.0
+    size = save_adapter(model, label_ids, TaggerConfig(labels=["a", "b", "c"], r=2, alpha=4), tmp_path / "a.pt")
+    assert size > 0
+    fresh, _ = tiny_gpt2()                               # same seed: same "pretrained" base
+    inject_lora(fresh, r=2, alpha=4)
+    load_into(fresh, label_ids, torch.load(tmp_path / "a.pt", weights_only=True))
+    prompts = [[1, 2, 3], [4, 5, 6, 7]]
+    assert torch.allclose(label_logits(model, prompts, label_ids, 0), label_logits(fresh, prompts, label_ids, 0))
 
 
 # Milestone 5: Merge LoRA adapter and perform inference on new clauses

@@ -92,11 +92,24 @@ def load_ledgar() -> dict[str, list[dict]]:
             for split in ("train", "validation", "test")}
 
 
+# Chosen after reading the Indian public records (data/real_docs): the LEDGAR clause types those
+# documents actually contain. The top-6 LEDGAR types are US boilerplate (Counterparts never occurs
+# in them); payment, tax, termination, arbitration and warranty clauses are everywhere.
+PROCUREMENT_LABELS = [
+    "Governing Laws", "Notices", "Amendments", "Severability", "Entire Agreements", "Terminations",
+    "Assignments", "Confidentiality", "Indemnifications", "Taxes", "Payments", "Insurances",
+    "Arbitration", "Warranties",
+]
+
+
 def build_dataset(splits: dict[str, list[dict]], top_k: int, per_class: int,
-                  eval_per_class: int, seed: int = 0) -> dict:
-    """Pick the label set and the balanced train / val / test samples from LEDGAR splits."""
+                  eval_per_class: int, seed: int = 0, labels: list[str] | None = None) -> dict:
+    """Pick the label set (an explicit list, or the top_k most common) and balanced train / val / test samples."""
     train_all = dedupe(splits["train"])
-    labels = top_labels(train_all, top_k)
+    labels = list(labels) if labels else top_labels(train_all, top_k)
+    unknown = set(labels) - {r["label"] for r in train_all}
+    if unknown:
+        raise ValueError(f"not LEDGAR clause types: {sorted(unknown)}")
     train = balanced_sample(train_all, labels, per_class, seed)
     out = {"labels": labels, "train": train}
     for split, name in (("validation", "val"), ("test", "test")):

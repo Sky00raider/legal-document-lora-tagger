@@ -1,0 +1,23 @@
+parameters: 82,064,640 total | LoRA A/B 147,456 (0.18%) | trainable incl. 6 label rows 152,064 (0.19%)
+{'loss': '5.498', 'grad_norm': '142.1', 'learning_rate': '0.0009467', 'epoch': '0.3333'}
+{'loss': '0.5814', 'grad_norm': '8.211', 'learning_rate': '0.0008911', 'epoch': '0.6667'}
+{'loss': '0.3022', 'grad_norm': '11.62', 'learning_rate': '0.0008356', 'epoch': '1'}
+{'loss': '0.1308', 'grad_norm': '16.31', 'learning_rate': '0.00078', 'epoch': '1.333'}
+{'loss': '0.05779', 'grad_norm': '0.4887', 'learning_rate': '0.0007244', 'epoch': '1.667'}
+{'loss': '0.1301', 'grad_norm': '0.07829', 'learning_rate': '0.0006689', 'epoch': '2'}
+{'loss': '0.07344', 'grad_norm': '30.94', 'learning_rate': '0.0006133', 'epoch': '2.333'}
+{'loss': '0.01541', 'grad_norm': '0.00992', 'learning_rate': '0.0005578', 'epoch': '2.667'}
+{'loss': '0.1144', 'grad_norm': '0.03028', 'learning_rate': '0.0005022', 'epoch': '3'}
+{'loss': '0.02611', 'grad_norm': '0.007413', 'learning_rate': '0.0004467', 'epoch': '3.333'}
+{'loss': '0.01789', 'grad_norm': '0.001411', 'learning_rate': '0.0003911', 'epoch': '3.667'}
+{'loss': '0.001499', 'grad_norm': '0.6856', 'learning_rate': '0.0003356', 'epoch': '4'}
+{'loss': '0.00435', 'grad_norm': '0.005025', 'learning_rate': '0.00028', 'epoch': '4.333'}
+{'loss': '0.0009007', 'grad_norm': '0.003423', 'learning_rate': '0.0002244', 'epoch': '4.667'}
+{'loss': '0.0002933', 'grad_norm': '0.002197', 'learning_rate': '0.0001689', 'epoch': '5'}
+{'loss': '0.0003072', 'grad_norm': '0.004457', 'learning_rate': '0.0001133', 'epoch': '5.333'}
+{'loss': '0.006726', 'grad_norm': '0.004642', 'learning_rate': '5.778e-05', 'epoch': '5.667'}
+{'loss': '0.0004133', 'grad_norm': '1.15', 'learning_rate': '2.222e-06', 'epoch': '6'}
+{'train_runtime': '2266', 'train_samples_per_second': '1.589', 'train_steps_per_second': '0.199', 'train_loss': '0.3868', 'epoch': '6'}
+trained in 37.8 min, final train loss 0.3868, val accuracy 0.990
+adapter saved: models/adapter.pt (599 KB)
+reloaded onto a fresh distilbert/distilgpt2: val accuracy 0.9900 (trained model: 0.9900) -> match

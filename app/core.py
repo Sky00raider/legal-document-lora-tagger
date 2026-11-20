@@ -2,16 +2,18 @@
 
 # --- Milestone 1: Prepare a dataset of legal clauses for tagging
 # Hint: Use the data preparation techniques from the 'Fine-Tune GPT-2 to Tag Legal Contract Clauses' drill.
-def milestone_1(top_k: int = 6, per_class: int = 100, eval_per_class: int = 50, seed: int = 0) -> dict:
-    """Download LEDGAR, keep the top_k clause types, write balanced train/val/test files."""
-    from app.data import DATA_DIR, build_dataset, format_example, load_ledgar, save_dataset
+def milestone_1(run: str = "top6", per_class: int = 100, eval_per_class: int = 50, seed: int = 0) -> dict:
+    """Download LEDGAR, keep the run's clause types, write balanced train/val/test files."""
+    from app.data import build_dataset, format_example, load_ledgar, save_dataset
+    from app.runs import get_run
 
-    dataset = build_dataset(load_ledgar(), top_k, per_class, eval_per_class, seed)
-    save_dataset(dataset)
-    print(f"Label set ({top_k} clause types, count in LEDGAR train after dedupe):")
+    r = get_run(run)
+    dataset = build_dataset(load_ledgar(), r.top_k, per_class, eval_per_class, seed, r.labels)
+    save_dataset(dataset, r.data_dir)
+    print(f"Label set '{run}' ({len(dataset['labels'])} clause types, count in LEDGAR train after dedupe):")
     for name, n in dataset["label_counts_in_ledgar_train"].items():
         print(f"  {name:<22} {n:>6}")
-    print(f"train {len(dataset['train'])}, val {len(dataset['val'])}, test {len(dataset['test'])} -> {DATA_DIR}/")
+    print(f"train {len(dataset['train'])}, val {len(dataset['val'])}, test {len(dataset['test'])} -> {r.data_dir}/")
     first = dataset["train"][0]
     print("example (end of training string):  ..." + format_example(first["text"], first["label"])[-90:])
     return dataset
@@ -19,14 +21,16 @@ def milestone_1(top_k: int = 6, per_class: int = 100, eval_per_class: int = 50, 
 
 # --- Milestone 2: Extend GPT-2 tokenizer and model for custom tags
 # Hint: Apply the special token extension methods from the 'Fine-Tune GPT-2 to Tag Legal Contract Clauses' drill.
-def milestone_2(base: str = "distilbert/distilgpt2") -> None:
+def milestone_2(run: str = "top6", base: str = "distilbert/distilgpt2") -> None:
     """Add one atomic token per clause type and show what changed."""
     from transformers import AutoTokenizer
 
     from app.data import label_token, load_labels, load_split
     from app.model import ClauseEncoder, load_base
+    from app.runs import get_run
 
-    labels = load_labels()
+    data_dir = get_run(run).data_dir
+    labels = load_labels(data_dir)
     before = AutoTokenizer.from_pretrained(base)
     model, tokenizer, label_ids = load_base(base, labels)
     token = label_token(labels[0])
@@ -36,23 +40,25 @@ def milestone_2(base: str = "distilbert/distilgpt2") -> None:
     print(f"{token!r} before: {before.tokenize(token)}  after: {tokenizer.tokenize(token)}")
     for name, i in zip(labels, label_ids):
         print(f"  {label_token(name):<24} id {i}")
-    row = load_split("train")[0]
+    row = load_split("train", data_dir)[0]
     ids = ClauseEncoder(tokenizer, label_ids).training_examples([row["text"]], [labels.index(row["label"])])[0]
     print(f"a training example is {len(ids)} tokens; its last 4 tokens: {[tokenizer.decode([i]) for i in ids[-4:]]}")
 
 
 # --- Milestone 3: Implement LoRA adapter and inject into GPT-2
 # Hint: Refer to the 'Build LoRA from Scratch' drill for implementing and injecting the LoRA adapter.
-def milestone_3(base: str = "distilbert/distilgpt2", r: int = 8, alpha: float = 16.0) -> None:
+def milestone_3(run: str = "top6", base: str = "distilbert/distilgpt2", r: int = 8, alpha: float = 16.0) -> None:
     """Freeze everything, wrap every c_attn in a LoRALinear, check nothing changed yet."""
     import torch
 
     from app.data import load_labels, load_split
     from app.lora import count_parameters, inject_lora
     from app.model import ClauseEncoder, label_logits, load_base
+    from app.runs import get_run
 
-    model, tokenizer, label_ids = load_base(base, load_labels())
-    prompts = ClauseEncoder(tokenizer, label_ids).prompts([row["text"] for row in load_split("val")[:8]])
+    data_dir = get_run(run).data_dir
+    model, tokenizer, label_ids = load_base(base, load_labels(data_dir))
+    prompts = ClauseEncoder(tokenizer, label_ids).prompts([row["text"] for row in load_split("val", data_dir)[:8]])
     before = label_logits(model, prompts, label_ids, tokenizer.pad_token_id)
 
     wrapped = inject_lora(model, "c_attn", r, alpha)
@@ -70,8 +76,38 @@ def milestone_3(base: str = "distilbert/distilgpt2", r: int = 8, alpha: float = 
 
 # --- Milestone 4: Fine-tune GPT-2 with LoRA on the clause dataset
 # Hint: Combine the fine-tuning approach from 'Fine-Tune GPT-2 to Tag Legal Contract Clauses' with the LoRA injection from 'Build LoRA from Scratch'.
-def milestone_4():  # TODO(milestone 4)
-    raise NotImplementedError("TODO(milestone 4)")
+def milestone_4(run: str = "top6", base: str = "distilbert/distilgpt2", r: int = 8, alpha: float = 16.0,
+                epochs: float = 6, grad_accum: int = 1) -> dict:
+    """Train, save the adapter, reload it onto a fresh base and check accuracy matches."""
+    import json
+    from pathlib import Path
+
+    from app.adapter import TaggerConfig, load_adapter, save_adapter
+    from app.data import load_labels, load_split
+    from app.model import ClauseEncoder
+    from app.runs import get_run
+    from app.train import accuracy, train
+
+    spec = get_run(run)
+    adapter_path = spec.adapter
+    cfg = TaggerConfig(labels=load_labels(spec.data_dir), base=base, r=r, alpha=alpha)
+    cfg.extra["run"] = run
+    val = load_split("val", spec.data_dir)
+    out = train(cfg, load_split("train", spec.data_dir), val, epochs=epochs, grad_accum=grad_accum)
+    report = out["report"]
+    cfg.extra["training"] = {k: v for k, v in report.items() if k != "loss_log"}
+    size = save_adapter(out["model"], out["label_ids"], cfg, Path(adapter_path))
+    print(f"adapter saved: {adapter_path} ({size / 1024:.0f} KB)")
+
+    model, tokenizer, label_ids, _ = load_adapter(Path(adapter_path))
+    reloaded = accuracy(model, ClauseEncoder(tokenizer, label_ids, cfg.max_len), val, cfg.labels,
+                        tokenizer.pad_token_id)
+    print(f"reloaded onto a fresh {base}: val accuracy {reloaded:.4f} (trained model: {report['val_accuracy']:.4f})"
+          f" -> {'match' if abs(reloaded - report['val_accuracy']) < 1e-6 else 'MISMATCH'}")
+    report.update(adapter_bytes=size, reloaded_val_accuracy=round(reloaded, 4))
+    spec.out.mkdir(parents=True, exist_ok=True)
+    (spec.out / "train_report.json").write_text(json.dumps(report, indent=2), encoding="utf-8")
+    return report
 
 
 # --- Milestone 5: Merge LoRA adapter and perform inference on new clauses
