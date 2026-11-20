@@ -1,6 +1,9 @@
 httpx
 pytest
 datasets
-transformers
+transformers>=5.0
 torch
 numpy
+accelerate    # needed by the Hugging Face Trainer (training only)
+pymupdf       # reading .pdf documents
+matplotlib    # calibration plots
