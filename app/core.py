@@ -2,8 +2,19 @@
 
 # --- Milestone 1: Prepare a dataset of legal clauses for tagging
 # Hint: Use the data preparation techniques from the 'Fine-Tune GPT-2 to Tag Legal Contract Clauses' drill.
-def milestone_1():  # TODO(milestone 1)
-    raise NotImplementedError("TODO(milestone 1)")
+def milestone_1(top_k: int = 6, per_class: int = 100, eval_per_class: int = 50, seed: int = 0) -> dict:
+    """Download LEDGAR, keep the top_k clause types, write balanced train/val/test files."""
+    from app.data import DATA_DIR, build_dataset, format_example, load_ledgar, save_dataset
+
+    dataset = build_dataset(load_ledgar(), top_k, per_class, eval_per_class, seed)
+    save_dataset(dataset)
+    print(f"Label set ({top_k} clause types, count in LEDGAR train after dedupe):")
+    for name, n in dataset["label_counts_in_ledgar_train"].items():
+        print(f"  {name:<22} {n:>6}")
+    print(f"train {len(dataset['train'])}, val {len(dataset['val'])}, test {len(dataset['test'])} -> {DATA_DIR}/")
+    first = dataset["train"][0]
+    print("example (end of training string):  ..." + format_example(first["text"], first["label"])[-90:])
+    return dataset
 
 
 # --- Milestone 2: Extend GPT-2 tokenizer and model for custom tags
