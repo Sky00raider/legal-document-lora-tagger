@@ -1,0 +1,10 @@
+test accuracy 0.970, macro-F1 0.970  (300 clauses)
+clause type             prec   rec    f1
+Governing Laws          1.00  0.98  0.99
+Notices                 0.98  0.98  0.98
+Counterparts            0.96  1.00  0.98
+Entire Agreements       0.98  0.94  0.96
+Severability            0.96  0.94  0.95
+Amendments              0.94  0.98  0.96
+confusions: Entire Agreements<->Amendments 1+1, Governing Laws<->Severability 1+0, Entire Agreements<->Severability 1+0, Notices<->Severability 0+1, Severability<->Amendments 1+0
+trainable 152,064 of 82,064,640 (0.19%), adapter 599 KB vs full model 313 MB, trained in 37.8 min

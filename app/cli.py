@@ -37,6 +37,8 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("--grad-accum", type=int, default=1, help="split each batch of 8 to save memory (same maths)")
     p = sub.add_parser("merge", help="milestone 5: merge the adapter into GPT-2 and tag new clauses")
     _run_arg(p)
+    p = sub.add_parser("evaluate", help="milestone 6: accuracy, macro-F1, per-class, confusions, efficiency")
+    _run_arg(p)
     p = sub.add_parser("real-eval", help="evaluate on your hand-labelled Indian clauses")
     _run_arg(p)
     args = parser.parse_args(argv)
@@ -57,6 +59,9 @@ def main(argv: list[str] | None = None) -> None:
     elif args.command == "merge":
         from app.core import milestone_5
         milestone_5(args.run)
+    elif args.command == "evaluate":
+        from app.core import milestone_6
+        milestone_6(args.run)
     elif args.command == "real-eval":
         from app.pipeline import real_eval
         real_eval(args.run)

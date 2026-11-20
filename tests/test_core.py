@@ -253,8 +253,36 @@ def test_milestone_5_repeated_headers_are_removed():
     assert "Government of India Tender" not in page_lines(pages)
 
 
-# Milestone 6: Evaluate tagging accuracy and model efficiency
-@pytest.mark.skip(reason="remove this line when you start milestone 6")
-def test_milestone_6():
-    raise NotImplementedError("write the test for milestone 6")
+# Milestone 6 + standout 3: evaluation maths and the clerk report
+def test_milestone_6_metrics():
+    import numpy as np
+    from app.metrics import at_threshold, coverage_curve, macro_f1, per_class, reliability
+    pred, target = np.array([0, 1, 1, 2]), np.array([0, 1, 2, 2])
+    stats = per_class(pred, target, 3)
+    assert stats["recall"].tolist() == [1.0, 1.0, 0.5]
+    assert macro_f1(pred, target, 3) == pytest.approx((1 + 2 / 3 + 2 / 3) / 3)
+    conf, correct = np.array([0.9, 0.8, 0.6, 0.3]), np.array([1, 1, 0, 1])
+    cov, acc, _ = coverage_curve(conf, correct)
+    assert cov.tolist() == [0.25, 0.5, 0.75, 1.0] and acc[1] == 1.0
+    assert at_threshold(conf, correct, 0.7) == {"threshold": 0.7, "coverage": 0.5, "accuracy": 1.0, "abstained": 2}
+    assert reliability(conf, correct, bins=5)["count"].sum() == 4
+
+
+def test_milestone_6_report_html_md_json(tmp_path):
+    import json
+    from app.report import build_document, write_reports
+    clauses = [{"id": 1, "number": "7.1", "text": "Security <b>10%</b> of value."},
+               {"id": 2, "number": "", "text": "Unclear text."}]
+    tags = [{"label": "Notices", "confidence": 0.93, "needs_review": False},
+            {"label": "Waivers", "confidence": 0.41, "needs_review": True}]
+    doc = build_document("demo.pdf", clauses, tags, ["Notices", "Waivers"], threshold=0.7)
+    assert doc["summary"] == {"clauses": 2, "auto_tagged": 1, "needs_review": 1,
+                              "auto_tagged_by_label": {"Notices": 1, "Waivers": 0}}
+    paths = write_reports(doc, tmp_path / "demo.tagged")
+    assert [p.suffix for p in paths] == [".json", ".md", ".html"]
+    page = paths[2].read_text(encoding="utf-8")
+    assert "NEEDS REVIEW" in page and "93%" in page and "&lt;b&gt;10%&lt;/b&gt;" in page   # escaped, not injected
+    assert "<script" not in page and "http" not in page.split("</style>")[0]                # self-contained
+    assert "**NEEDS REVIEW** (best guess: Waivers)" in paths[1].read_text(encoding="utf-8")
+    assert json.loads(paths[0].read_text(encoding="utf-8"))["clauses"][1]["needs_review"] is True
 

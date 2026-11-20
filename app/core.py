@@ -161,5 +161,7 @@ def milestone_5(run: str = "top6") -> None:
 
 # --- Milestone 6: Evaluate tagging accuracy and model efficiency
 # Hint: Design evaluation metrics similar to those used in the 'Fine-Tune GPT-2 to Tag Legal Contract Clauses' drill to assess performance.
-def milestone_6():  # TODO(milestone 6)
-    raise NotImplementedError("TODO(milestone 6)")
+def milestone_6(run: str = "top6") -> dict:
+    """Test-set accuracy, macro-F1, per-class results, confusions and efficiency numbers."""
+    from app.evaluate import evaluate_ledgar
+    return evaluate_ledgar(run)
