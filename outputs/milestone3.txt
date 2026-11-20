@@ -1,0 +1,8 @@
+wrapped 6 layers: transformer.h.0.attn.c_attn ... transformer.h.5.attn.c_attn
+LoRALinear(
+  in=768, out=2304, r=8, scale=2
+  (base): Conv1D(nf=2304, nx=768)
+)
+total 82,064,640 | trainable 147,456 (0.180%)  [r=8, alpha=16.0]
+per layer: A (8, 768) + B (2304, 8) = 24,576 numbers
+B = 0 at init, so outputs are unchanged: max |difference| = 0.00e+00 -> True

@@ -11,6 +11,9 @@ def main(argv: list[str] | None = None) -> None:
     p.add_argument("--per-class", type=int, default=100, help="training examples per clause type")
     p.add_argument("--eval-per-class", type=int, default=50, help="validation and test examples per type")
     sub.add_parser("tokens", help="milestone 2: add the label tokens and show what changed")
+    p = sub.add_parser("inject", help="milestone 3: inject LoRA and count trainable parameters")
+    p.add_argument("--r", type=int, default=8)
+    p.add_argument("--alpha", type=float, default=16.0)
     args = parser.parse_args(argv)
     if args.command == "hello":
         print("Legal Document LoRA Tagger is ready. Open README.md for your milestones.")
@@ -20,6 +23,9 @@ def main(argv: list[str] | None = None) -> None:
     elif args.command == "tokens":
         from app.core import milestone_2
         milestone_2()
+    elif args.command == "inject":
+        from app.core import milestone_3
+        milestone_3(r=args.r, alpha=args.alpha)
 
 
 if __name__ == "__main__":

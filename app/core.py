@@ -43,8 +43,29 @@ def milestone_2(base: str = "distilbert/distilgpt2") -> None:
 
 # --- Milestone 3: Implement LoRA adapter and inject into GPT-2
 # Hint: Refer to the 'Build LoRA from Scratch' drill for implementing and injecting the LoRA adapter.
-def milestone_3():  # TODO(milestone 3)
-    raise NotImplementedError("TODO(milestone 3)")
+def milestone_3(base: str = "distilbert/distilgpt2", r: int = 8, alpha: float = 16.0) -> None:
+    """Freeze everything, wrap every c_attn in a LoRALinear, check nothing changed yet."""
+    import torch
+
+    from app.data import load_labels, load_split
+    from app.lora import count_parameters, inject_lora
+    from app.model import ClauseEncoder, label_logits, load_base
+
+    model, tokenizer, label_ids = load_base(base, load_labels())
+    prompts = ClauseEncoder(tokenizer, label_ids).prompts([row["text"] for row in load_split("val")[:8]])
+    before = label_logits(model, prompts, label_ids, tokenizer.pad_token_id)
+
+    wrapped = inject_lora(model, "c_attn", r, alpha)
+    lora, total = count_parameters(model)
+    trainable = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    print(f"wrapped {len(wrapped)} layers: {wrapped[0]} ... {wrapped[-1]}")
+    print(model.get_submodule(wrapped[0]))
+    print(f"total {total:,} | trainable {trainable:,} ({100 * trainable / total:.3f}%)  [r={r}, alpha={alpha}]")
+    print(f"per layer: A {tuple(model.get_submodule(wrapped[0]).A.shape)} + "
+          f"B {tuple(model.get_submodule(wrapped[0]).B.shape)} = {lora // len(wrapped):,} numbers")
+    after = label_logits(model, prompts, label_ids, tokenizer.pad_token_id)
+    print(f"B = 0 at init, so outputs are unchanged: max |difference| = {(after - before).abs().max():.2e}"
+          f" -> {torch.allclose(before, after)}")
 
 
 # --- Milestone 4: Fine-tune GPT-2 with LoRA on the clause dataset

@@ -95,9 +95,50 @@ def test_milestone_2_real_tokenizer_label_token_is_atomic():
 
 
 # Milestone 3: Implement LoRA adapter and inject into GPT-2
-@pytest.mark.skip(reason="remove this line when you start milestone 3")
-def test_milestone_3():
-    raise NotImplementedError("write the test for milestone 3")
+def test_milestone_3_lora_linear_shape_and_zero_init():
+    from app.lora import LoRALinear
+    base = nn.Linear(10, 6)
+    lora = LoRALinear(base, r=4, alpha=8)
+    x = torch.randn(3, 5, 10)
+    assert lora(x).shape == (3, 5, 6)
+    assert torch.equal(lora(x), base(x))                 # B = 0, so nothing changes at init
+    assert lora.A.shape == (4, 10) and lora.B.shape == (6, 4) and lora.scale == 2.0
+    assert [n for n, p in lora.named_parameters() if p.requires_grad] == ["A", "B"]
+
+
+def test_milestone_3_inject_freezes_everything_but_a_and_b():
+    from app.lora import LoRALinear, count_parameters, inject_lora
+    model, _ = tiny_gpt2()
+    names = inject_lora(model, "c_attn", r=2, alpha=4)
+    assert names == ["transformer.h.0.attn.c_attn", "transformer.h.1.attn.c_attn"]
+    assert all(isinstance(model.get_submodule(n), LoRALinear) for n in names)
+    trainable = [n for n, p in model.named_parameters() if p.requires_grad]
+    assert trainable and all(n.endswith((".A", ".B")) for n in trainable)
+    lora, _ = count_parameters(model)
+    assert lora == 2 * 2 * (16 + 48)                     # 2 layers x r x (in + out)
+
+
+@pytest.mark.parametrize("make", [lambda: nn.Linear(8, 12), lambda: Conv1D(12, 8)])
+def test_milestone_3_merge_equals_unmerged(make):
+    from app.lora import LoRALinear
+    torch.manual_seed(1)
+    lora = LoRALinear(make(), r=4, alpha=8)
+    nn.init.normal_(lora.B)                               # pretend it was trained
+    x = torch.randn(2, 3, 8)
+    before = lora(x)
+    merged = lora.merged()
+    assert torch.allclose(merged(x), before, atol=1e-5)
+
+
+def test_milestone_3_conv1d_weight_is_transposed_on_merge():
+    from app.lora import LoRALinear
+    conv = Conv1D(12, 8)                                  # GPT-2 layer 8 -> 12, weight stored (8, 12)
+    assert conv.weight.shape == (8, 12)
+    lora = LoRALinear(conv, r=2, alpha=2)
+    assert (lora.in_features, lora.out_features) == (8, 12)
+    nn.init.normal_(lora.B)
+    expected = conv.weight.detach().clone() + lora.delta_weight().T
+    assert torch.allclose(lora.merged().weight, expected)
 
 
 # Milestone 4: Fine-tune GPT-2 with LoRA on the clause dataset
