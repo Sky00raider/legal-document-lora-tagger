@@ -1,0 +1,14 @@
+40 hand-labelled clauses: 5 in the label set, 35 Other (threshold 0.69)
+  in-set accuracy (argmax)            60.0%
+  in-set accuracy when auto-tagged     75.0%
+  Other clauses flagged NEEDS REVIEW   14.3%
+  clerk view: auto-tags 85% at 8.8% accuracy
+  confident mistakes:
+    truth Payments          said Notices           (1.00)  Advance/ mobilization Payment not allowed: Payments for supplies made 
+    truth Other             said Severability      (1.00)  Notwithstanding the remedial provisions contained in GCC-clause 9.12 o
+    truth Insurances        said Notices           (1.00)  Transit insurance shall be arranged by Nalco & therefore bidders are n
+    truth Other             said Severability      (0.94)  Application. These general conditions of contract (as contained in thi
+    truth Other             said Notices           (1.00)  Progressing of Deliveries The Contractor shall allow reasonable facili
+    truth Other             said Entire Agreements (1.00)  The Contract. Language of Contract Unless otherwise stipulated in SCC,
+    truth Other             said Notices           (0.80)  Obligations of the contractor under Labour Codes and Rules. In cases w
+    truth Other             said Entire Agreements (0.80)  has a relationship with another bidder, directly or through common thi

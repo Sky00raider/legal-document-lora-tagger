@@ -1,0 +1,334 @@
+{
+  "clauses": 40,
+  "in_set": 5,
+  "other": 35,
+  "in_set_accuracy": 0.6,
+  "in_set_auto_accuracy": 0.75,
+  "in_set_flagged": 0.2,
+  "other_flagged": 0.14285714285714285,
+  "auto_tagged_share": 0.85,
+  "auto_tagged_accuracy": 0.08823529411764706,
+  "threshold": 0.6901420950889587,
+  "per_clause": [
+    {
+      "key": "imd_tender_td310.pdf#573",
+      "truth": "Payments",
+      "pred": "Notices",
+      "confidence": 0.9998,
+      "needs_review": false,
+      "text": "Advance/ mobilization Payment not allowed: Payments for supplies made or incidental works/ services rendered shall be released after supplies have been made and only after such incidental works/ servi"
+    },
+    {
+      "key": "mtd_goods_bpcl_copy.pdf#225",
+      "truth": "Other",
+      "pred": "Entire Agreements",
+      "confidence": 0.381,
+      "needs_review": true,
+      "text": "Evaluation of Conformity to Commercial and Other Clauses Bidder must comply with all the Commercial and other clauses of the Tender Document as per submissions in Form 5. The Procuring Entity shall al"
+    },
+    {
+      "key": "imd_tender_td310.pdf#542",
+      "truth": "Other",
+      "pred": "Severability",
+      "confidence": 0.9989,
+      "needs_review": false,
+      "text": "Notwithstanding the remedial provisions contained in GCC-clause 9.12 or 12.1, none of the Party shall seek any such remedies or damages for the delay and/ or failure of the other Party in fulfilling i"
+    },
+    {
+      "key": "mtd_goods_bpcl_copy.pdf#705",
+      "truth": "Insurances",
+      "pred": "Notices",
+      "confidence": 0.9967,
+      "needs_review": false,
+      "text": "Transit insurance shall be arranged by Nalco & therefore bidders are not required to include transit insurance in their of"
+    },
+    {
+      "key": "ivri_gcc.pdf#3",
+      "truth": "Other",
+      "pred": "Severability",
+      "confidence": 0.9374,
+      "needs_review": false,
+      "text": "Application. These general conditions of contract (as contained in this section) shall apply to the extent they are not superseded by provisions in other parts of the contract."
+    },
+    {
+      "key": "imd_tender_td310.pdf#363",
+      "truth": "Severability",
+      "pred": "Severability",
+      "confidence": 1.0,
+      "needs_review": false,
+      "text": "Severability If any provision or condition of this Contract is prohibited or rendered invalid or unenforceable, such prohibition, invalidity or unenforceability shall not affect the validity or enforc"
+    },
+    {
+      "key": "mtd_goods_bpcl_copy.pdf#426",
+      "truth": "Other",
+      "pred": "Notices",
+      "confidence": 0.9999,
+      "needs_review": false,
+      "text": "Progressing of Deliveries The Contractor shall allow reasonable facilities and free access to his Works/ records to the Inspecting Officer or such other Officer as may be nominated by the Procuring En"
+    },
+    {
+      "key": "mtd_goods_bpcl_copy.pdf#640",
+      "truth": "Governing Laws",
+      "pred": "Notices",
+      "confidence": 0.5456,
+      "needs_review": true,
+      "text": "This agreement is subject to Indian Law. The place of performance and jurisdiction is the Registered Office of the Principal, i.e., New Delhi. Changes and supplements, as well as termination notices, "
+    },
+    {
+      "key": "mtd_goods_bpcl_copy.pdf#304",
+      "truth": "Other",
+      "pred": "Entire Agreements",
+      "confidence": 1.0,
+      "needs_review": false,
+      "text": "The Contract. Language of Contract Unless otherwise stipulated in SCC, the contract shall be written in the Official Language or English. All correspondence and other contract documents, which parties"
+    },
+    {
+      "key": "imd_tender_td310.pdf#441",
+      "truth": "Other",
+      "pred": "Notices",
+      "confidence": 0.7959,
+      "needs_review": false,
+      "text": "Obligations of the contractor under Labour Codes and Rules. In cases where Contract or part(s) thereof is to be performed by the contractor at the premises of the Procuring Entity or Consignee, the co"
+    },
+    {
+      "key": "imd_tender_td310.pdf#91",
+      "truth": "Other",
+      "pred": "Entire Agreements",
+      "confidence": 0.7958,
+      "needs_review": false,
+      "text": "has a relationship with another bidder, directly or through common third parties, that puts it in a position to have access to information about or influence the bid of another Bidder or influence the"
+    },
+    {
+      "key": "imd_tender_td310.pdf#793",
+      "truth": "Other",
+      "pred": "Entire Agreements",
+      "confidence": 0.6675,
+      "needs_review": true,
+      "text": "Performance Guarantee and Signing the contract We further confirm that, if our bid is accepted, we shall provide you with performance security of the required amount stipulated in the Tender Document "
+    },
+    {
+      "key": "mtd_goods_bpcl_copy.pdf#162",
+      "truth": "Other",
+      "pred": "Notices",
+      "confidence": 0.996,
+      "needs_review": false,
+      "text": "The date and time by which the written queries for the Pre-bid must reach the authority and last date for registration for participation Pre-bid conference are also mentioned in the TIS. If the dates "
+    },
+    {
+      "key": "imd_tender_td310.pdf#820",
+      "truth": "Other",
+      "pred": "Notices",
+      "confidence": 0.9998,
+      "needs_review": false,
+      "text": "(j) Telephone nos. (with country/ area codes): (k) Mobile (l) (m) (n) Type of GST Registration (Registered, Unregistered, Composition, SEZ, RCM etc.): (o) (p) Registered office from where agency/ asso"
+    },
+    {
+      "key": "gem_gtc_v1_10.pdf#114",
+      "truth": "Indemnifications",
+      "pred": "Governing Laws",
+      "confidence": 0.7929,
+      "needs_review": false,
+      "text": "Violation of any intellectual property rights or any other rights. Once GeM notifies the Buyer/ Seller of such claims, they shall defend and indemnify GeM for the same. Further, in no case they shall "
+    },
+    {
+      "key": "imd_tender_td310.pdf#860",
+      "truth": "Other",
+      "pred": "Notices",
+      "confidence": 0.9507,
+      "needs_review": false,
+      "text": "The Principal shall disqualify from the tender process all bidders who do not sign this Pact or violate its provisions. Section 7 - Criminal charges against violating Bidder(s)/ Contractor(s)/ Subcont"
+    },
+    {
+      "key": "gem_gtc_v1_10.pdf#70",
+      "truth": "Taxes",
+      "pred": "Notices",
+      "confidence": 0.9799,
+      "needs_review": false,
+      "text": "Statutory variation in the rate of GST, taking place between the date of award of contract and the original / refixed delivery period, shall be to the Buyer's account. For claiming any change in price"
+    },
+    {
+      "key": "imd_tender_td310.pdf#187",
+      "truth": "Other",
+      "pred": "Notices",
+      "confidence": 0.9986,
+      "needs_review": false,
+      "text": "Downloading the Tender Document; Corrigenda and Clarifications. Downloading the Tender Document The Tender Document shall be published and be available for download as mentioned in TIS. The Bidders ca"
+    },
+    {
+      "key": "imd_tender_td310.pdf#411",
+      "truth": "Confidentiality",
+      "pred": "Counterparts",
+      "confidence": 0.4691,
+      "needs_review": true,
+      "text": "Notwithstanding the above, the contractor may furnish to its holding company or its Subcontractor(s) such documents, data, and other information it receives from the Procuring Entity to the extent req"
+    },
+    {
+      "key": "ivri_gcc.pdf#68",
+      "truth": "Payments",
+      "pred": "Notices",
+      "confidence": 0.9944,
+      "needs_review": false,
+      "text": "on delivery 90% of the contract price shall be paid on receipt of the goods by the consignee and upon submission of following documents to the paying authority:- The supplier's invoice showing contrac"
+    },
+    {
+      "key": "imd_tender_td310.pdf#871",
+      "truth": "Amendments",
+      "pred": "Notices",
+      "confidence": 1.0,
+      "needs_review": false,
+      "text": "Changes and supplements, as well as termination notices, need to be made in writing. Side agreements have not been made."
+    },
+    {
+      "key": "imd_tender_td310.pdf#649",
+      "truth": "Other",
+      "pred": "Notices",
+      "confidence": 0.6985,
+      "needs_review": false,
+      "text": "All warranty obligations, if any, shall continue to survive despite the termination."
+    },
+    {
+      "key": "imd_tender_td310.pdf#876",
+      "truth": "Other",
+      "pred": "Notices",
+      "confidence": 0.9408,
+      "needs_review": false,
+      "text": "For and on behalf of the Principal (Name of the Officer and Designation) (Office Seal) (Name of the Officer and Designation) (Office Seal) For and on behalf of the Principal Place Date Witness 1: (Nam"
+    },
+    {
+      "key": "ivri_gcc.pdf#102",
+      "truth": "Arbitration",
+      "pred": "Notices",
+      "confidence": 0.9712,
+      "needs_review": false,
+      "text": "However, where the value of the contract is Rs. 15 lakhs (Rs.one and a half million) and below, the disputes or differences arising in it shall be referred to a sole arbitrator. The sole arbitrator sh"
+    },
+    {
+      "key": "mtd_goods_bpcl_copy.pdf#371",
+      "truth": "Other",
+      "pred": "Notices",
+      "confidence": 0.9873,
+      "needs_review": false,
+      "text": "Option Quantity Clause: If invoked explicitly in the contract, the Procuring Entity shall reserve the right, but without any obligation to do so, to increase or decrease the ordered quantity upto a pe"
+    },
+    {
+      "key": "imd_tender_td310.pdf#530",
+      "truth": "Other",
+      "pred": "Notices",
+      "confidence": 0.9299,
+      "needs_review": false,
+      "text": "Delay in the contractor If the contractor fails to deliver the Goods or any instalment thereof or delays incidental Work/ Services (e.g. installation, commissioning, operator training etc.) within the"
+    },
+    {
+      "key": "mtd_goods_bpcl_copy.pdf#696",
+      "truth": "Other",
+      "pred": "Amendments",
+      "confidence": 0.617,
+      "needs_review": true,
+      "text": "() Update gntire table 'or-Participation-in-this-Tender. =) Conte ce Policies-of-the-Government. e:"
+    },
+    {
+      "key": "mtd_goods_bpcl_copy.pdf#604",
+      "truth": "Other",
+      "pred": "Notices",
+      "confidence": 0.9432,
+      "needs_review": false,
+      "text": "Fawn ia . os a3 ce i. ~ a am on bd Adonai. ended Sd ioven ie fender entre envenediag Faniy gn fn NE TRS SERVI TIININ TEINS FOAASRD OLRUEE OASTLITIN Fria i isang y Frocuring Organisation [v1] aoueldwon"
+    },
+    {
+      "key": "imd_tender_td310.pdf#619",
+      "truth": "Arbitration",
+      "pred": "Entire Agreements",
+      "confidence": 0.8888,
+      "needs_review": false,
+      "text": "It is further a term of this arbitration agreement that where the arbitral award is for the payment of money, no interest shall be payable on whole or any part of the money for any period till the dat"
+    },
+    {
+      "key": "imd_tender_td310.pdf#87",
+      "truth": "Other",
+      "pred": "Notices",
+      "confidence": 0.7686,
+      "needs_review": false,
+      "text": "Conflict of Interest. Any bidder having a conflict of interest, which substantially affects fair competition, shall not be eligible to bid in this tender. Bids found to have a conflict of interest sha"
+    },
+    {
+      "key": "mtd_goods_bpcl_copy.pdf#140",
+      "truth": "Other",
+      "pred": "Notices",
+      "confidence": 0.999,
+      "needs_review": false,
+      "text": "The price of Goods quoted FAS/ FOB port of shipment or CIF port of entry in India or CIF specified place of destination in India as indicated in the Schedule of Requirements."
+    },
+    {
+      "key": "mtd_goods_bpcl_copy.pdf#495",
+      "truth": "Arbitration",
+      "pred": "Notices",
+      "confidence": 0.9035,
+      "needs_review": false,
+      "text": "Notice for Arbitration. Authority to Appoint Arbitrator(s): For this Arbitration Agreement 'The Appointing. Authority', to appoint the arbitrator shall be Head of the Procuring Organisation named in t"
+    },
+    {
+      "key": "ivri_gcc.pdf#105",
+      "truth": "Governing Laws",
+      "pred": "Governing Laws",
+      "confidence": 1.0,
+      "needs_review": false,
+      "text": "Application law. The contract shall be interpreted in accordance with the laws of India."
+    },
+    {
+      "key": "mtd_goods_bpcl_copy.pdf#16",
+      "truth": "Other",
+      "pred": "Entire Agreements",
+      "confidence": 0.7829,
+      "needs_review": false,
+      "text": "Abbreviations: o.oo. The Entire Agreement o.oo. Severability o.oo. POM ES cenit eee eae eae aaa aaa aaa 65. ee. COMMUNICAHONS ...cuureeniieneinerenireenerencernecreneeennsrensesnsssensesnnsssssssnssse"
+    },
+    {
+      "key": "imd_tender_td310.pdf#355",
+      "truth": "Other",
+      "pred": "Amendments",
+      "confidence": 0.9816,
+      "needs_review": false,
+      "text": "means ink signed or digitally signed with a valid Digital Signature as per IT Act 2000 (as amended from time to time). It also includes stamped, except in the case of Letter of Award or amendment ther"
+    },
+    {
+      "key": "mtd_goods_bpcl_copy.pdf#51",
+      "truth": "Other",
+      "pred": "Notices",
+      "confidence": 0.9278,
+      "needs_review": false,
+      "text": "Preparation and Submission and Opening of Bids (ITB-clause 9.0 and 10.0) Bids to be | President of India, Through Head of Procurement, Procuring Entity Addressed to Instructions [https://etenders.gov."
+    },
+    {
+      "key": "imd_tender_td310.pdf#36",
+      "truth": "Other",
+      "pred": "Notices",
+      "confidence": 0.9901,
+      "needs_review": false,
+      "text": "Obtaining the Tender Document and clarifications (ITB-clause 7.0) eProcurement Portal and helpdesk for Document availability and submission https://eprocure.gov.in/eprocu re/app or Government e Market"
+    },
+    {
+      "key": "mtd_goods_bpcl_copy.pdf#322",
+      "truth": "Notices",
+      "pred": "Notices",
+      "confidence": 0.9999,
+      "needs_review": false,
+      "text": "Co For all purposes of the contract, including arbitration, thereunder the address of parties to which the other party shall address all communications and notices shall be: (a) The address of the con"
+    },
+    {
+      "key": "imd_tender_td310.pdf#624",
+      "truth": "Arbitration",
+      "pred": "Notices",
+      "confidence": 0.9582,
+      "needs_review": false,
+      "text": "Cost of Arbitration and fees of the Arbitrator(s). The concerned parties shall bear the cost of arbitration in terms of section 31 (A) of The Arbitration Act. The cost shall inter-alia include fees of"
+    },
+    {
+      "key": "ivri_gcc.pdf#17",
+      "truth": "Other",
+      "pred": "Notices",
+      "confidence": 0.4314,
+      "needs_review": true,
+      "text": "Subject to GCC sub- clause 7.4 above, the performance security will be discharged by the purchaser and returned to the supplier on completion of the supplier's contractual obligations including the wa"
+    }
+  ]
+}

@@ -39,8 +39,19 @@ def main(argv: list[str] | None = None) -> None:
     _run_arg(p)
     p = sub.add_parser("evaluate", help="milestone 6: accuracy, macro-F1, per-class, confusions, efficiency")
     _run_arg(p)
+    p = sub.add_parser("tag", help="tag a .txt or .pdf document: writes <file>.tagged.md/.json/.html")
+    p.add_argument("file")
+    p.add_argument("--adapter", default="models/adapter.pt")
+    p.add_argument("--threshold", type=float, default=None, help="review threshold (default: the calibrated one)")
+    p.add_argument("--out", default=None, help="output path without extension (default: next to the input)")
+    p = sub.add_parser("label", help="hand-label clauses from data/real_docs (resumable)")
+    p.add_argument("--n", type=int, default=40)
+    p.add_argument("--review", action="store_true", help="confirm or change the draft labels one by one")
     p = sub.add_parser("real-eval", help="evaluate on your hand-labelled Indian clauses")
     _run_arg(p)
+    p = sub.add_parser("calibrate", help="accuracy vs coverage, reliability diagram, pick the review threshold")
+    _run_arg(p)
+    p.add_argument("--target", type=float, default=0.95, help="accuracy the auto-tagged clauses should reach")
     args = parser.parse_args(argv)
     if args.command == "hello":
         print("Legal Document LoRA Tagger is ready. Open README.md for your milestones.")
@@ -62,9 +73,22 @@ def main(argv: list[str] | None = None) -> None:
     elif args.command == "evaluate":
         from app.core import milestone_6
         milestone_6(args.run)
+    elif args.command == "tag":
+        from app.pipeline import tag_document
+        tag_document(args.file, args.adapter, args.threshold, args.out)
+    elif args.command == "label":
+        from app.data import PROCUREMENT_LABELS
+        from app.real import label_interactively, review_labels
+        if args.review:
+            review_labels(PROCUREMENT_LABELS)
+        else:
+            label_interactively(PROCUREMENT_LABELS, args.n)
     elif args.command == "real-eval":
         from app.pipeline import real_eval
         real_eval(args.run)
+    elif args.command == "calibrate":
+        from app.calibrate import calibrate
+        calibrate(args.run, args.target)
 
 
 if __name__ == "__main__":
